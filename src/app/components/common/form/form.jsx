@@ -38,6 +38,15 @@ const FormComponent = ({
         }
     }, [data]);
 
+    const handleKeyDown = useCallback((event) => {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            const form = event.target.form;
+            const indexField = Array.prototype.indexOf.call(form, event.target);
+            form.elements[indexField + 1].focus();
+        }
+    }, []);
+
     const clonedElement = React.Children.map(children, (child) => {
         let config = {};
         const childType = typeof child.type;
@@ -52,7 +61,8 @@ const FormComponent = ({
                 ...child.props,
                 onChange: handleChange,
                 value: data[child.props.name] || "",
-                error: errors[child.props.name]
+                error: errors[child.props.name],
+                onKeyDown: handleKeyDown
             };
         }
         if (childType === "string") {

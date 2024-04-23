@@ -41,7 +41,6 @@ const EditUserPage = () => {
                 profession: profession._id
             }))
         );
-
         api.professions.fetchAll().then((data) => setProfession(data));
     }, []);
     useEffect(() => {
